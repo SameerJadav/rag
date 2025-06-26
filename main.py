@@ -11,8 +11,8 @@ class CustomAPIEmbeddings(Embeddings):
         for text in texts:
             embedding = (
                 requests.post(
-                    "http://10.11.5.136:11434/api/embed",
-                    json={"model": "mistral:latest", "input": text},
+                    "http://10.31.3.55:11434/api/embed",
+                    json={"model": "nomic-embed-text:v1.5", "input": text},
                 )
                 .json()
                 .get("embeddings", [])
@@ -23,8 +23,8 @@ class CustomAPIEmbeddings(Embeddings):
     def embed_query(self, text: str) -> list[float]:
         embedding = (
             requests.post(
-                "http://10.11.5.136:11434/api/embed",
-                json={"model": "mistral:latest", "input": text},
+                "http://10.31.3.55:11434/api/embed",
+                json={"model": "nomic-embed-text:v1.5", "input": text},
             )
             .json()
             .get("embeddings", [])
@@ -61,5 +61,4 @@ vector_store.add_documents(documents=documents)
 
 results = vector_store.similarity_search(query="Who is the writer of Vinland Saga?")
 
-for result in results:
-    print(f"{result.page_content}\n")
+print(results[0].page_content)
